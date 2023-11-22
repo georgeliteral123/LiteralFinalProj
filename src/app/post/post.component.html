@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meow</title>
+
+  
+</head>
+<body>
+
+  <h1>{{ post?.title }}</h1>
+<img class="img-responsive" src="{{ post?.imgPatch }}" width="1300px" alt="" />
+<p><strong>Description: </strong> {{ post?.description }}</p>
+
+<p>
+  <strong>Author: </strong> <u><a href="#" target="_blank">{{ post?.author }}</a></u></p>
+  
+<p><strong>Date Created: </strong>{{ post?.dateCreated }}</p>
+
+<div style="display:inline-flex;">
+  <button (click)="onClick()">👍</button>&nbsp;
+  <p style="margin-top:10px">Likes: {{ post?.numberOfLikes }}</p> &nbsp;&nbsp;
+  </div> <br>
+    
+  <!-- <div class="comment">
+    <h1>Comment:</h1>
+    
+    <input type="text" [(ngModel)]="comment" placeholder="Enter comment here">
+  
+    <button *ngIf="editingCommentIndex === null" class="btn btn-warning" (click)="submitComment()" (keyup.enter)="submitComment()">Post Comment</button>
+    <button *ngIf="editingCommentIndex !== null" class="btn btn-warning" (click)="updateComment()" (keyup.enter)="updateComment()">Update Comment</button>
+    
+    <div *ngFor="let comment of post?.comments; let i = index">
+      <p>{{ comment }}</p>
+      <button class="btn btn-outline-primary" (click)="setEditingComment(i)">Edit Comment</button>
+      <button class="btn btn-outline-danger" (click)="deleteComment(i)">Delete Comment</button>
+    </div>
+  </div> -->
+
+<div class="comment">
+  <h1>Comment:</h1>
+  
+  <input type="text" [(ngModel)]="comment" placeholder="Enter comment here">
+
+  <button *ngIf="editingCommentIndex === null || editingCommentIndex === undefined" class="btn btn-warning" (click)="submitComment()" (keyup.enter)="submitComment()"> Post Comment </button>
+
+  <button *ngIf="editingCommentIndex !== null" class="btn btn-warning" (click)="updateComment()" (keyup.enter)="updateComment()">Update Comment</button>
+  
+  <div *ngFor="let comment of post?.comments; let i = index">
+    <p>{{ comment }}</p>
+    <button class="btn btn-outline-primary" (click)="setEditingComment(i)">Edit Comment</button>
+    <button class="btn btn-outline-danger" (click)="deleteComment(i)">Delete Comment</button>
+  </div>
+</div>
+
+
+  <div>
+<button  class="btn btn-primary" (click)="onEdit()">Edit</button> &nbsp;&nbsp;
+<button  class="btn btn-danger" (click)="delete()">Delete</button>
+</div>
+
+</body>
+</html>
