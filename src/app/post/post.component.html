@@ -9,8 +9,9 @@
 </head>
 <body>
 
-  <h1>{{ post?.title }}</h1>
-<img class="img-responsive" src="{{ post?.imgPatch }}" width="1300px" alt="" />
+<div class="container">
+ <h1>Title: {{ post?.title }}</h1>
+<img class="img-responsive" src="{{ post?.imgPatch }}" width="500px" height="400px" alt="img" />
 <p><strong>Description: </strong> {{ post?.description }}</p>
 
 <p>
@@ -18,47 +19,45 @@
   
 <p><strong>Date Created: </strong>{{ post?.dateCreated }}</p>
 
-<div style="display:inline-flex;">
+<div class="reaction" style="display:inline-flex;">
   <button (click)="onClick()">👍</button>&nbsp;
   <p style="margin-top:10px">Likes: {{ post?.numberOfLikes }}</p> &nbsp;&nbsp;
-  </div> <br>
-    
-  <!-- <div class="comment">
-    <h1>Comment:</h1>
-    
-    <input type="text" [(ngModel)]="comment" placeholder="Enter comment here">
-  
-    <button *ngIf="editingCommentIndex === null" class="btn btn-warning" (click)="submitComment()" (keyup.enter)="submitComment()">Post Comment</button>
-    <button *ngIf="editingCommentIndex !== null" class="btn btn-warning" (click)="updateComment()" (keyup.enter)="updateComment()">Update Comment</button>
-    
-    <div *ngFor="let comment of post?.comments; let i = index">
-      <p>{{ comment }}</p>
-      <button class="btn btn-outline-primary" (click)="setEditingComment(i)">Edit Comment</button>
-      <button class="btn btn-outline-danger" (click)="deleteComment(i)">Delete Comment</button>
-    </div>
-  </div> -->
+  <button (click)="onHAHA()">😁</button>&nbsp;
+  <p style="margin-top:10px">Haha: {{ post?.numberOfHaha }}</p> &nbsp;&nbsp;
+  <button (click)="onHeart()">💖</button>&nbsp;
+  <p style="margin-top:10px">Heart: {{ post?.numberOfHeart }}</p> &nbsp;&nbsp;
+  <button (click)="onSad()">😭</button>&nbsp;
+  <p style="margin-top:10px">Sad: {{ post?.numberOfSad }}</p> &nbsp;&nbsp;
+  <button (click)="onAngry()">😡</button>&nbsp;
+  <p style="margin-top:10px">Angry: {{ post?.numberOfAngry }}</p> &nbsp;&nbsp;
+</div> 
 
-<div class="comment">
-  <h1>Comment:</h1>
-  
-  <input type="text" [(ngModel)]="comment" placeholder="Enter comment here">
+<br>
 
-  <button *ngIf="editingCommentIndex === null || editingCommentIndex === undefined" class="btn btn-warning" (click)="submitComment()" (keyup.enter)="submitComment()"> Post Comment </button>
-
-  <button *ngIf="editingCommentIndex !== null" class="btn btn-warning" (click)="updateComment()" (keyup.enter)="updateComment()">Update Comment</button>
+<div class="comment" style="text-align: center; align-items: center;">
+  <h1>Add a Comment:</h1>
   
-  <div *ngFor="let comment of post?.comments; let i = index">
+  <textarea name="comment" id="comment" cols="50" rows="2" [(ngModel)]="comment" placeholder="Enter comment here"></textarea>
+
+  <button *ngIf="editingCommentIndex === null || editingCommentIndex === undefined" class="btn btn-warning subcom" (click)="submitComment()" style="margin-bottom: 10px;"> Post Comment </button>
+
+  <button *ngIf="editingCommentIndex !== null" class="btn btn-warning update" (click)="updateComment()" style="margin-bottom: 10px;">Update Comment</button>
+    <h1>Comments:</h1>
+  
+  <div class="edit-delete-com-btn" *ngFor="let comment of post?.comments; let i = index">
     <p>{{ comment }}</p>
     <button class="btn btn-outline-primary" (click)="setEditingComment(i)">Edit Comment</button>
     <button class="btn btn-outline-danger" (click)="deleteComment(i)">Delete Comment</button>
   </div>
 </div>
 
+  <div class=delete-edit-btn>
+<button  class="btn btn-primary" (click)="onEdit()"> Edit Post</button>&nbsp;
+<button  class="btn btn-danger" (click)="delete()"> Delete Post</button>
 
-  <div>
-<button  class="btn btn-primary" (click)="onEdit()">Edit</button> &nbsp;&nbsp;
-<button  class="btn btn-danger" (click)="delete()">Delete</button>
 </div>
+</div>
+
 
 </body>
 </html>

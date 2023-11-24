@@ -62,6 +62,10 @@ export class PostEditComponent implements OnInit {
       'George',
       new Date(),
       0,
+      0,
+      0,
+      0,
+      0,
       [],
       'some-id', // Add this line
     );

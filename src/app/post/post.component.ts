@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css'],
+  styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
   constructor(private postService: PostService, private router: Router) {
@@ -18,8 +18,6 @@ export class PostComponent implements OnInit {
   @Input() index: number = 0;
   @Input() post?: Post;
   
-  
-
   ngOnInit(): void {
     console.log(this.post);
     if (!this.post?.comments) {
@@ -33,8 +31,22 @@ export class PostComponent implements OnInit {
   onEdit(){
     this.router.navigate(['/post-edit', this.index]);
     }
+
+    // REACTIONS
     onClick(){
       this.postService.LikePost(this.index);
+    }
+    onHAHA(){
+      this.postService.HahaPost(this.index);
+    }
+    onHeart(){
+      this.postService.HeartPost(this.index);
+    }
+    onSad(){
+      this.postService.SadPost(this.index);
+    }
+    onAngry(){
+      this.postService.AngryPost(this.index);
     }
 
 

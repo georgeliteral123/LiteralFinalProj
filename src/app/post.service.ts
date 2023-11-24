@@ -53,9 +53,26 @@ export class PostService {
     return this.listOfPosts[index];
   }
   LikePost(index:number){
-    this.listOfPosts[index].numberOfLikes ++;
+    this.listOfPosts[index].numberOfLikes++;
     this.saveData();
   }
+  HahaPost(index:number){
+    this.listOfPosts[index].numberOfHaha++;
+    this.saveData();
+  }
+  HeartPost(index:number){
+    this.listOfPosts[index].numberOfHeart++;
+    this.saveData();
+  }
+  SadPost(index:number){
+    this.listOfPosts[index].numberOfSad++;
+    this.saveData();
+  }
+  AngryPost(index:number){
+    this.listOfPosts[index].numberOfAngry++
+  }
+
+
   addComment(index: number, comment: string) {
     this.listOfPosts[index].comments.push(comment);
     this.saveData();
