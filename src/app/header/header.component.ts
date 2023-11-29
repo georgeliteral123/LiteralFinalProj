@@ -1,16 +1,26 @@
 import { BackEndService } from './../back-end.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ThemeService } from '../theme.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  constructor(private backEndService:BackEndService) {}
+export class HeaderComponent  implements OnInit {
+  isDarkMode: boolean = false;
 
-  ngOnInit():void {
+  constructor(private backEndService:BackEndService, private themeService: ThemeService) {}
+
+  ngOnInit() {
+    this.themeService.isDarkMode.subscribe(darkMode => {
+      this.isDarkMode = darkMode;
+    });
   }
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
+}
 
   // onSave() {
   //   this.backEndService.saveData();
@@ -18,4 +28,3 @@ export class HeaderComponent {
   // onFetch() {
   //   this.backEndService.fetchData();
   // }
-}

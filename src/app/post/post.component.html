@@ -9,9 +9,10 @@
 </head>
 <body>
 
+  <div [ngClass]="{'dark-mode': isDarkMode}">
 <div class="container">
  <h1>Title: {{ post?.title }}</h1>
-<img class="img-responsive" src="{{ post?.imgPatch }}" width="500px" height="400px" alt="img" />
+<img class="img-responsive" src="{{ post?.imgPatch }}" width="500px" height="400px" alt="img" style="position: relative;" />
 <p><strong>Description: </strong> {{ post?.description }}</p>
 
 <p>
@@ -55,6 +56,7 @@
 <button  class="btn btn-primary" (click)="onEdit()"> Edit Post</button>&nbsp;
 <button  class="btn btn-danger" (click)="delete()"> Delete Post</button>
 
+</div>
 </div>
 </div>
 

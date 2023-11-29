@@ -3,6 +3,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
+import { ThemeService } from '../theme.service';
+
 
 @Component({
   selector: 'app-post',
@@ -10,8 +12,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  constructor(private postService: PostService, private router: Router) {
+  isDarkMode: boolean = false;
+
+  constructor(private postService: PostService, private router: Router, private themeService: ThemeService) {
     this.editingCommentIndex = null;
+    
   }
 
   comment: string ='';
@@ -23,8 +28,10 @@ export class PostComponent implements OnInit {
     if (!this.post?.comments) {
       this.post!.comments = [];
     }
+    this.themeService.isDarkMode.subscribe(darkMode => {
+      this.isDarkMode = darkMode;
+    });
   }
-  
   delete() {
     this.postService.deleteButton(this.index);
   }

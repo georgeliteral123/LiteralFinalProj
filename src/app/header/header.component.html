@@ -4,6 +4,8 @@
   integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
   crossorigin="anonymous">
 
+  <div [ngClass]="{'dark-mode': isDarkMode}">
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#" style="font-weight: 1000; color: red"
@@ -38,6 +40,14 @@
         <!-- <button class="btn btn-outline-success" type="submit" (click)="onSave()">Save </button>
         <button class="btn btn-outline-success" type="submit" (click)="onFetch()">Fetch </button> -->
       </ul>
+
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="darkModeSwitch" (change)="toggleDarkMode()">
+        <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>
+      </div>
+      
+        <!-- your existing code -->
+
       <form class="d-flex" role="search">
         <input
           class="form-control me-2"

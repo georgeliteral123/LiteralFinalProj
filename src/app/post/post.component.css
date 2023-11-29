@@ -63,5 +63,7 @@
 .reaction button:hover{
     transform: scale(2.5);
 }
-.comment{
+.dark-mode {
+  background-color: #333;
+  color: white;
 }
