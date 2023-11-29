@@ -41,7 +41,8 @@
   <button *ngIf="editingCommentIndex === null || editingCommentIndex === undefined" class="btn btn-warning subcom" (click)="submitComment()" style="margin-bottom: 10px;"> Post Comment </button>
 
   <button *ngIf="editingCommentIndex !== null" class="btn btn-warning update" (click)="updateComment()" style="margin-bottom: 10px;">Update Comment</button>
-    <h1>Comments:</h1>
+    
+  <h1>Comments:</h1>
   
   <div class="edit-delete-com-btn" *ngFor="let comment of post?.comments; let i = index">
     <p>{{ comment }}</p>
