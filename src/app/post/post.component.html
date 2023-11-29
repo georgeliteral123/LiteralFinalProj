@@ -10,9 +10,10 @@
 <body>
 
   <div [ngClass]="{'dark-mode': isDarkMode}">
-<div class="container">
+    
+    <div class="container">
  <h1>Title: {{ post?.title }}</h1>
-<img class="img-responsive" src="{{ post?.imgPatch }}" width="500px" height="400px" alt="img" style="position: relative;" />
+<img class="img-responsive" src="{{ post?.imgPatch }}" width="300px" height="200px" alt="img" style="position: relative;" />
 <p><strong>Description: </strong> {{ post?.description }}</p>
 
 <p>
