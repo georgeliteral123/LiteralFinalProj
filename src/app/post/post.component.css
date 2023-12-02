@@ -1,39 +1,41 @@
-
+* {
+  margin: 0;
+  top: 0;
+  box-sizing: border-box;
+}
 .container {
   border: solid 1px black;
-  margin: 10px;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   right: 0;
   display: block;
+  margin-bottom: 15px;
 }
-.comment textarea, .subcom, .update{
+.comment textarea,
+.subcom,
+.update {
   display: inline-flex;
   vertical-align: middle;
 }
-.comment .subcom, .update{
-
-}
-.delete-edit-btn{
+.delete-edit-btn {
   top: 0;
   bottom: 0;
   margin-top: 10px;
 }
-.edit-delete-com-btn{
+.edit-delete-com-btn {
   border: solid 1px #000;
   display: flex;
   margin-left: 40px;
   width: 500px;
   padding: 10px;
 }
-.edit-delete-com-btn p{
+.edit-delete-com-btn p {
   width: 200px;
   display: flex;
   text-align: center;
   overflow: hidden;
   overflow-x: scroll;
   margin-right: 10px;
-  
 }
 .edit-delete-com-btn .btn {
   margin-top: 20px;
@@ -47,25 +49,24 @@
   align-items: center;
   justify-content: center;
 }
-.reaction{
+.reaction {
   border: solid 1px black;
   border-radius: 10px;
 }
-.reaction p{
+.reaction p {
   display: inline;
 }
-.reaction button{
+.reaction button {
   font-size: 30px;
   border: none;
   background: none;
   border-radius: 10px;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
-.reaction button:hover{
-    transform: scale(2.5);
+.reaction button:hover {
+  transform: scale(2.5);
 }
 .dark-mode {
-  background-color: #333;
+  background-color: #242526;
   color: white;
-
 }

@@ -11,7 +11,7 @@ import { OnInit } from '@angular/core';
 export class AppComponent  implements OnInit {
   isDarkMode: boolean = false;
   title = 'crud';
-
+  
   constructor(private themeService: ThemeService) {
   }
   

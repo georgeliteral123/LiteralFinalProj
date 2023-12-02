@@ -1,4 +1,9 @@
 .dark-mode {
-  background-color: #333;
+  background-color: #18191a;
   color: white;
+}
+.container .row {
+  display: flex;
+  justify-content: center;
+  margin-top: 4.8rem;
 }

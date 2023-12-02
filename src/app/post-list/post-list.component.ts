@@ -1,5 +1,5 @@
 import { BackEndService } from './../back-end.service';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -9,15 +9,17 @@ import { PostService } from '../post.service';
   styleUrls: ['./post-list.component.css'],
 })
 export class PostListComponent {
-  listOfPosts: Post[] = [];   
+  listOfPosts: Post[] = [];
 
   constructor(
-    private postService: PostService, private backEndService:BackEndService) {}
+    private postService: PostService,
+    private backEndService: BackEndService
+  ) {}
 
-    ngOnInit(): void{
-      this.listOfPosts = this.postService.getPost();
-      this.postService.listChangeEvent.subscribe((post:Post[]) =>{
-        this.listOfPosts = post;
-      })
-    }
-    }
+  ngOnInit(): void {
+    this.listOfPosts = this.postService.getPost();
+    this.postService.listChangeEvent.subscribe((post: Post[]) => {
+      this.listOfPosts = post;
+    });
+  }
+}

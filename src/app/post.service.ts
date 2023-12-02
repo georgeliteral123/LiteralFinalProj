@@ -40,7 +40,6 @@ export class PostService {
   // deleteButton(index: number) {
   //   this.listOfPosts.splice(index, 1);
   // }
-  
   addPost(post: Post) {
     this.listOfPosts.push(post);
     this.saveData();
@@ -53,43 +52,44 @@ export class PostService {
     return this.listOfPosts[index];
   }
   LikePost(index:number){
-    this.listOfPosts[index].numberOfLikes++;
+    this.listOfPosts[index].numberOfLikes ++;
     this.saveData();
   }
-  HahaPost(index:number){
+  HahaPost(index: number) {
     this.listOfPosts[index].numberOfHaha++;
     this.saveData();
   }
-  HeartPost(index:number){
+  HeartPost(index: number) {
     this.listOfPosts[index].numberOfHeart++;
     this.saveData();
   }
-  SadPost(index:number){
+  SadPost(index: number) {
     this.listOfPosts[index].numberOfSad++;
     this.saveData();
   }
-  AngryPost(index:number){
-    this.listOfPosts[index].numberOfAngry++
+  AngryPost(index: number) {
+    this.listOfPosts[index].numberOfAngry++;
   }
-
 
   addComment(index: number, comment: string) {
     this.listOfPosts[index].comments.push(comment);
     this.saveData();
-}
-  setPost(NewListOfPost:Post[]) {
+  }
+  setPost(NewListOfPost: Post[]) {
     this.listOfPosts = NewListOfPost;
-    this.listChangeEvent.emit(NewListOfPost)
+    this.listChangeEvent.emit(NewListOfPost);
     this.saveData();
   }
 
   deleteButton(index: number) {
     const postToDelete = this.listOfPosts[index];
     const postId = postToDelete.id;
-  
+
     // Send an HTTP DELETE request to Firebase to delete the post.
     this.http
-      .delete(`https://practicedb-128d0-default-rtdb.asia-southeast1.firebasedatabase.app/post/${postId}.json`)
+      .delete(
+        `https://practicedb-128d0-default-rtdb.asia-southeast1.firebasedatabase.app/post/${postId}.json`
+      )
       .subscribe(() => {
         this.listOfPosts.splice(index, 1);
         this.listChangeEvent.emit(this.listOfPosts);
@@ -97,4 +97,3 @@ export class PostService {
       });
   }
 }
-
