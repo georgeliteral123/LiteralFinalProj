@@ -35,10 +35,14 @@ export class PostComponent implements OnInit {
     });
   }
   delete() {
-    this.postService.deleteButton(this.index);
+    if (confirm('Are you sure you want to delete this post?')) {
+      this.postService.deleteButton(this.index);
+    }
   }
   onEdit() {
-    this.router.navigate(['/post-edit', this.index]);
+    if (confirm('Do you really want to make changes inthis post?')) {
+      this.router.navigate(['/post-edit', this.index]);
+    }
   }
 
   // REACTIONS
@@ -87,9 +91,11 @@ export class PostComponent implements OnInit {
   }
   editingCommentIndex: number | null = null;
   setEditingComment(index: number): void {
-    if (this.post) {
-      this.editingCommentIndex = index;
-      this.comment = this.post.comments[index];
+    if (confirm('Do you want to continue editing this comment?')) {
+      if (this.post) {
+        this.editingCommentIndex = index;
+        this.comment = this.post.comments[index];
+      }
     }
   }
   updateComment(): void {
@@ -107,9 +113,11 @@ export class PostComponent implements OnInit {
     }
   }
   deleteComment(index: number): void {
-    if (this.post) {
-      this.post.comments.splice(index, 1);
-      this.postService.updatePost(this.index, this.post);
+    if (confirm('Are you sure you want to delete this comment?')) {
+      if (this.post) {
+        this.post.comments.splice(index, 1);
+        this.postService.updatePost(this.index, this.post);
+      }
     }
   }
 }

@@ -5,12 +5,15 @@
   crossorigin="anonymous"
 />
 
-<h3 class="font-weight-bold" *ngIf="editMode==true"> Edit Post</h3>
-<h3 class="font-weight-bold" *ngIf="editMode==false"> Create Post</h3>
-
+<h3 class="font-weight-bold" *ngIf="editMode == true" style="margin-top: 3rem">
+  Edit Post
+</h3>
+<h3 class="font-weight-bold" *ngIf="editMode == false" style="margin-top: 7rem">
+  Create Post
+</h3>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="exampleInputEmail1" class="form-label">title</label>
     <input
       type="email"
@@ -19,8 +22,8 @@
       id="exampleInputEmail1"
       aria-describedby="emailHelp"
     />
-    <div id="emailHelp" class="form-text">
-      We'll never share your email with anyone else.
+    <div id="emailHelp">
+      <label>We'll never share your email with anyone else.</label>
     </div>
   </div>
   <div class="mb-3">
@@ -31,7 +34,7 @@
       id="exampleInputPassword1"
       formControlName="imgPath"
     />
-    <img src="{{ form.value.imgPath }}" alt="img" />
+    <img src="{{ form.value.imgPath }}" alt="img" width="500px" />
   </div>
   <div>
     <label for="description" class="form-label">Description</label>

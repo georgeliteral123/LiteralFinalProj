@@ -37,7 +37,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent],

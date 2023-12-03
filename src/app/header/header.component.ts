@@ -11,17 +11,12 @@ import { PostService } from '../post.service';
 })
 export class HeaderComponent implements OnInit {
   isDarkMode: boolean = false;
-  searchKeyword: string;
-  listOfPosts: any;
 
   constructor(
     private backEndService: BackEndService,
     private themeService: ThemeService,
     private postService: PostService
-  ) {
-    this.searchKeyword = '';
-
-  }
+  ) {}
 
   ngOnInit() {
     this.themeService.isDarkMode.subscribe((darkMode) => {

@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .dark-mode {
   background-color: #18191a;
   color: white;
@@ -5,5 +10,5 @@
 .container .row {
   display: flex;
   justify-content: center;
-  margin-top: 4.8rem;
+  margin-top: 3.2rem;
 }

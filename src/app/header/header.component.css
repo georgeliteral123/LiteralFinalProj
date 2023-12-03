@@ -1,4 +1,15 @@
-.dark-mode {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background: rgb(232, 232, 232);
+  box-shadow: 0 0 5px 2px black;
+}
+
+.navbar.dark-mode {
   background-color: #242526;
   color: white;
 }
