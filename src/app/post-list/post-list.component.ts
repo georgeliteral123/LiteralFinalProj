@@ -26,7 +26,7 @@ export class PostListComponent {
   }
   get filteredPosts(): Post[] {
     const filteredPosts = this.listOfPosts.filter((post) =>
-      post.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+    post.title.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     console.log(filteredPosts);
     return filteredPosts;
