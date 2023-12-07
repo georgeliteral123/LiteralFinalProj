@@ -28,8 +28,13 @@
 
 <br />
 
-<app-post
+<!-- <app-post
   *ngFor="let post of filteredPosts; let i = index"
+  [post]="post"
+  [index]="i"
+></app-post> -->
+<app-post
+  *ngFor="let post of filteredPosts; trackBy: trackByPosts; let i = index"
   [post]="post"
   [index]="i"
 ></app-post>

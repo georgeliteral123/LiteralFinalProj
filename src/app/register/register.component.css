@@ -16,3 +16,11 @@
 .container h1 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+body .dark-mode {
+  background-color: #242526;
+  color: white;
+}
+.dark-mode {
+  background-color: #18191a;
+  color: white;
+}

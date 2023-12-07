@@ -1,20 +1,28 @@
+interface User {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  // other properties like photoURL, emailVerified, etc.
+}
+
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { map } from 'rxjs';
+import { map, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: AngularFireAuth) {}
+  private _currentUser = new BehaviorSubject<User | null>(null);
+  currentUser = this._currentUser.asObservable();
 
-  isLoggedIn = this.auth.authState.pipe(map((user) => !!user));
-
-  validateEmail(email: string) {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+  constructor(private auth: AngularFireAuth) {
+    this.auth.user.subscribe((user) => {
+      this._currentUser.next(user);
+    });
   }
+  // currentUser = this.auth.user;
+  isLoggedIn = this.auth.authState.pipe(map((user) => !!user));
 
   // async signUp(email: string, password: string) {
   //   try {
@@ -28,29 +36,31 @@ export class AuthService {
   async signUp(email: string, password: string) {
     try {
       await this.auth.createUserWithEmailAndPassword(email, password);
-      console.log('Sign up successful');
+      window.alert('Sign up successful');
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
   async logIn(email: string, password: string) {
     try {
       await this.auth.signInWithEmailAndPassword(email, password);
-      console.log('Log in successful');
+      window.alert('Log in successful');
     } catch (error) {
       console.error(error);
     }
   }
 
   async logOut() {
-    try {
-      await this.auth.signOut();
-      console.log('Log out successful');
-    } catch (error) {
-      console.error(error);
+      try {
+        await this.auth.signOut();
+        this._currentUser.next(null); // Emit null through _currentUser
+        window.alert('Log out successful');
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
+  
 
   // isUserRegistered(email: string, password : string): Promise<boolean> {
   //   return this.auth

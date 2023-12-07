@@ -9,8 +9,8 @@
     <title>Log In</title>
   </head>
 
-  <body>
-    <div class="container">
+  <body [ngClass]="{ 'dark-mode': isDarkMode }">
+    <div class="container" [ngClass]="{ 'dark-mode': isDarkMode }">
       <h1>Log In your Account</h1>
       <form (submit)="login(email.value, password.value)">
         <label for="email" class="form-label">Email:</label>

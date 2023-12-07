@@ -4,10 +4,9 @@ import { Post } from './post.model';
 import { Observable, Subject, retry } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable({ providedIn: 'root' })
 export class PostService {
-  listChangeEvent: EventEmitter<Post[]> = new EventEmitter;
+  listChangeEvent: EventEmitter<Post[]> = new EventEmitter();
 
   listOfPosts: Post[] = [
     // new Post(
@@ -20,7 +19,7 @@ export class PostService {
     //   [],
     // )
   ];
-  constructor (private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   saveData() {
     // Save the entire list of posts to Firebase.
@@ -48,11 +47,11 @@ export class PostService {
     this.listOfPosts[index] = post;
     this.saveData();
   }
-  getSpecPost(index: number){
+  getSpecPost(index: number) {
     return this.listOfPosts[index];
   }
-  LikePost(index:number){
-    this.listOfPosts[index].numberOfLikes ++;
+  LikePost(index: number) {
+    this.listOfPosts[index].numberOfLikes++;
     this.saveData();
   }
   HahaPost(index: number) {
@@ -75,9 +74,17 @@ export class PostService {
     this.listOfPosts[index].comments.push(comment);
     this.saveData();
   }
-  setPost(NewListOfPost: Post[]) {
-    this.listOfPosts = NewListOfPost;
-    this.listChangeEvent.emit(NewListOfPost);
+  // setPost(NewListOfPost: Post[]) {
+  //   this.listOfPosts = NewListOfPost;
+  //   this.listChangeEvent.emit(NewListOfPost);
+  //   this.saveData();
+  // }
+  setPost(NewListOfPost: Post[]): void {
+    // Create a copy of the array before emitting
+    const copyOfList = [...NewListOfPost];
+
+    this.listOfPosts = copyOfList;
+    this.listChangeEvent.emit(copyOfList);
     this.saveData();
   }
 

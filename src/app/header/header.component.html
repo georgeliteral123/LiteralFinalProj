@@ -38,6 +38,7 @@
         <button
           class="btn btn-outline-primary"
           type="submit"
+          *ngIf="currentUser | async"
           routerLink="/post-list"
         >
           <svg
@@ -63,6 +64,7 @@
           class="btn btn-outline-info"
           type="submit"
           routerLink="/post-edit"
+          *ngIf="currentUser | async"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +80,13 @@
           </svg>
           Create Post
         </button>
+        &nbsp;&nbsp;&nbsp;
 
+        <!-- <h4 *ngIf="currentUser">Logged in as: {{ currentUser.email }}</h4> -->
+        <!-- <h4 *ngIf="user">Logged in as: {{ user?.email }}</h4> -->
+        <h6 *ngIf="currentUser | async">
+          Logged in as: {{ (currentUser | async)?.email }}
+        </h6>
         <!-- <button class="btn btn-outline-success" type="submit" (click)="onSave()">Save </button>
         <button class="btn btn-outline-success" type="submit" (click)="onFetch()">Fetch </button> -->
       </ul>
@@ -126,13 +134,32 @@
           class="btn btn-outline-success"
           type="submit"
           routerLink="/login"
+          *ngIf="!(currentUser | async)"
         >
           Log In
         </button>
-
         &nbsp;&nbsp;&nbsp;
         <!-- <button class="btn btn-outline-success" type="submit">Sign Up</button> -->
-        <button class="btn btn-outline-success" type="submit" routerLink="/register">Sign Up</button>
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          routerLink="/register"
+          *ngIf="!(currentUser | async)"
+        >
+          Sign Up
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <!-- <button class="btn btn-outline-danger" type="submit" (click)="logOut()">
+          Log Out
+        </button> -->
+        <button
+          class="btn btn-outline-danger"
+          type="submit"
+          (click)="logOut()"
+          *ngIf="currentUser | async"
+        >
+          Log Out
+        </button>
       </form>
     </div>
   </div>
