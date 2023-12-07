@@ -13,35 +13,40 @@
     <div class="container">
       <h1>Log In your Account</h1>
       <form (submit)="login(email.value, password.value)">
-        <label for="password" class="form-label">Email:</label>
+        <label for="email" class="form-label">Email:</label>
         <div class="mb-3">
           <input
             type="email"
             class="form-control"
             #email
+            id="email"
             name="email"
             placeholder="Enter email"
             ngModel
             required
+            autocomplete="email"
           />
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
           <input
-            type="password"
+            [type]="hide ? 'password' : 'text'"
             class="form-control"
+            id="password"
             #password
             name="password"
             placeholder="Enter password"
             ngModel
             required
+            autocomplete="current-password"
           />
+          <input type="checkbox" (change)="hide = !hide" /> Show Password
         </div>
 
         <button type="submit" class="btn btn-primary">Log in</button>
       </form>
-      <label for="noacc"
+      <label for="email"
         >Don't have an account? <a routerLink="/register">Sign Up</a></label
       >
     </div>
@@ -53,3 +58,18 @@
   <input type="password" #password placeholder="Password" />
   <button type="submit">Login</button>
 </form> -->
+
+<!-- <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            #password
+            name="password"
+            placeholder="Enter password"
+            ngModel
+            required
+            autocomplete="current-password"
+          />
+        </div> -->

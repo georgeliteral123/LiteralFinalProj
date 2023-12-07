@@ -12,42 +12,50 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Log In</title>
+    <title>Register</title>
   </head>
 
   <body>
     <div class="container">
       <h1>Create an Account</h1>
       <form (submit)="register(email.value, password.value)">
-        <label for="password" class="form-label">Email:</label>
+        <label for="email" class="form-label">Email:</label>
         <div class="mb-3">
           <input
             type="email"
             class="form-control"
             #email
+            id="email"
             name="email"
             placeholder="Enter email"
             ngModel
             required
+            autocomplete="email"
           />
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
           <input
+            [type]="hide ? 'password' : 'text'"
             type="password"
             class="form-control"
+            id="password"
             #password
             name="password"
             placeholder="Enter password"
             ngModel
             required
+            autocomplete="current-password"
           />
+          <input type="checkbox" (change)="hide = !hide" /> Show Password
         </div>
 
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
-      <a for="mayacckanaba>" routerLink="/login">already have an account?</a>
+      <label for="email"
+        >Already have an account? <a routerLink="/login">Log in</a></label
+      >
     </div>
   </body>
 </html>

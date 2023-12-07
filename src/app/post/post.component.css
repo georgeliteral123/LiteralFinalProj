@@ -29,6 +29,7 @@
   margin-left: 40px;
   width: 500px;
   padding: 10px;
+  box-shadow: 0 0 10px 0 #242526;
 }
 .edit-delete-com-btn p {
   width: 200px;

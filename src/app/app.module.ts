@@ -63,12 +63,22 @@ import { RegisterComponent } from './register/register.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environment/environment';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'authentication', pathMatch: 'full' },
+  { path: '', component: LoginComponent },
   { path: 'post', component: PostComponent },
-  { path: 'post-list', component: PostListComponent },
-  { path: 'post-edit', component: PostEditComponent },
+  {
+    path: 'post-list',
+    component: PostListComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'post-edit',
+    component: PostEditComponent,
+    canActivate: [AuthGuardService],
+  },
   { path: 'auth', component: AuthComponent },
   { path: 'post-edit/:index', component: PostEditComponent },
   { path: 'login', component: LoginComponent },
