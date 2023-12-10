@@ -10,8 +10,11 @@
   [ngClass]="{ 'dark-mode': isDarkMode }"
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="#" style="font-weight: 1000; color: red"
-      >C R U D</a
+    <a
+      class="navbar-brand"
+      href="#"
+      style="font-weight: 1000; color: blue; position: relative; left: 30px"
+      >P I S B O K</a
     >
     <button
       button
@@ -30,16 +33,12 @@
         class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
         style="--bs-scroll-height: 100px"
       >
-        <!-- <li class="nav-item btn btn-outline-primary">
-          <a class="nav-link active" aria-current="page" routerLink="/post-list"
-            >Home</a
-          >
-        </li> -->
         <button
           class="btn btn-outline-primary"
           type="submit"
           *ngIf="currentUser | async"
           routerLink="/post-list"
+          style="left: 30px; position: relative"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,16 +54,12 @@
           </svg>
           Home
         </button>
-        <!-- <li class="nav-item btn btn-outline-secondary">
-          <a class="nav-link active" aria-current="page" routerLink="/post-edit"
-            >Create Post</a
-          >
-        </li> -->
         <button
           class="btn btn-outline-info"
           type="submit"
           routerLink="/post-edit"
           *ngIf="currentUser | async"
+          style="left: 30px; position: relative"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,16 +76,7 @@
           Create Post
         </button>
         &nbsp;&nbsp;&nbsp;
-
-        <!-- <h4 *ngIf="currentUser">Logged in as: {{ currentUser.email }}</h4> -->
-        <!-- <h4 *ngIf="user">Logged in as: {{ user?.email }}</h4> -->
-        <h6 *ngIf="currentUser | async">
-          Logged in as: {{ (currentUser | async)?.email }}
-        </h6>
-        <!-- <button class="btn btn-outline-success" type="submit" (click)="onSave()">Save </button>
-        <button class="btn btn-outline-success" type="submit" (click)="onFetch()">Fetch </button> -->
       </ul>
-
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -120,15 +106,11 @@
         &nbsp; &nbsp;
       </div>
 
-      <form class="d-flex">
-        <!-- <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search posts"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-danger" type="submit">Search</button> -->
+      <h6 *ngIf="currentUser | async">
+        Logged in as: {{ (currentUser | async)?.email }}
+      </h6>
 
+      <form class="d-flex">
         &nbsp;&nbsp;&nbsp;
         <button
           class="btn btn-outline-success"
@@ -139,7 +121,6 @@
           Log In
         </button>
         &nbsp;&nbsp;&nbsp;
-        <!-- <button class="btn btn-outline-success" type="submit">Sign Up</button> -->
         <button
           class="btn btn-outline-success"
           type="submit"
@@ -149,9 +130,6 @@
           Sign Up
         </button>
         &nbsp;&nbsp;&nbsp;
-        <!-- <button class="btn btn-outline-danger" type="submit" (click)="logOut()">
-          Log Out
-        </button> -->
         <button
           class="btn btn-outline-danger"
           type="submit"

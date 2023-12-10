@@ -10,6 +10,7 @@ export class BackEndService {
     this.fetchData();
   }
 
+  
   saveData() {
     const NewListOfPost: Post[] = this.postService.getPost();
     this.http
@@ -36,6 +37,8 @@ export class BackEndService {
       .subscribe();
   }
 }
+
+
 
 // fetchData(){
 //   this.http.get<Post[]>('https://practicedb-128d0-default-rtdb.asia-southeast1.firebasedatabase.app/post.json')

@@ -8,24 +8,45 @@
   <body>
     <div [ngClass]="{ 'dark-mode': isDarkMode }">
       <div class="container">
-        <h1>Title: {{ post?.title }}</h1>
+        <div class="delete-edit-btn">
+          <button (click)="showButtons = !showButtons">...</button>
+          <button
+            class="btn btn-primary"
+            *ngIf="showButtons"
+            (click)="onEdit()"
+          >
+            Edit Post</button
+          >&nbsp;
+          <!-- <button
+            class="btn btn-danger"
+            *ngIf="showButtons"
+            (click)="delete()"
+          >
+            Delete Post
+          </button> -->
+          <button
+            class="btn btn-danger"
+            *ngIf="showButtons && (currentUser | async)?.email == post?.author"
+            (click)="delete()"
+          >
+            Delete Post
+          </button>
+        </div>
 
+        <h5>
+          <p>{{ post?.author }}</p>
+        </h5>
+
+        <strong>Title: {{ post?.title }}</strong> <br />
         <img
           class="img-responsive"
           src="{{ post?.imgPatch }}"
           alt="img"
           width="300px"
-          height="200px"
           style="position: relative"
         />
         <p><strong>Description: </strong> {{ post?.description }}</p>
 
-        <p>
-          <strong>Author: </strong>
-          <u
-            ><a href="#" target="_blank">{{ post?.author }}</a></u
-          >
-        </p>
         <p><strong>Date Created: </strong>{{ post?.dateCreated }}</p>
 
         <div class="reaction" style="display: inline-flex">
@@ -44,12 +65,12 @@
 
         <br />
 
-        <div class="comment" style="text-align: center; align-items: center">
+        <!-- <div class="comment" style="text-align: center; align-items: center">
           <h1>Add a Comment:</h1>
 
           <textarea
             name="comment"
-            id="comment"
+            id="comment{{ index }}"
             cols="50"
             rows="2"
             [(ngModel)]="comment"
@@ -93,12 +114,130 @@
               Delete Comment
             </button>
           </div>
-        </div>
+        </div> -->
 
-        <div class="delete-edit-btn">
-          <button class="btn btn-primary" (click)="onEdit()">Edit Post</button
-          >&nbsp;
-          <button class="btn btn-danger" (click)="delete()">Delete Post</button>
+        <div
+          class="comment-section"
+          [ngClass]="{ 'dark-mode': isDarkMode }"
+          style="width: 100%; border-top: 1px solid #ccc; margin-top: 20px"
+        >
+          <h1>Add a Comment:</h1>
+          <textarea
+            name="comment"
+            id="comment{{ index }}"
+            cols="50"
+            rows="2"
+            [(ngModel)]="comment"
+            placeholder="Enter comment here"
+            style="width: 100%; margin-bottom: 10px"
+          ></textarea>
+
+          <button
+            *ngIf="
+              editingCommentIndex === null || editingCommentIndex === undefined
+            "
+            class="btn btn-warning subcom"
+            (click)="submitComment()"
+            style="margin-bottom: 10px"
+          >
+            Post Comment
+          </button>
+
+          <button
+            *ngIf="editingCommentIndex !== null"
+            class="btn btn-warning update"
+            (click)="updateComment()"
+            style="margin-bottom: 10px"
+          >
+            Update Comment
+          </button>
+
+          <h1>Comments:</h1>
+
+          <div
+            [ngClass]="{ 'dark-mode': isDarkMode }"
+            class="comment"
+            *ngFor="let comment of post?.comments; let i = index"
+            style="display: flex; align-items: flex-start; margin: 10px 0"
+          >
+            <div
+              class="idk"
+              [ngClass]="{ 'dark-mode': isDarkMode }"
+              style="background-color: #cacaca; border-radius: 18px"
+            >
+              <div
+                class="commentator-name"
+                [ngClass]="{ 'dark-mode': isDarkMode }"
+              >
+                <h6 style="position: fixed; display: contents">
+                  <b>{{ post?.author }}</b>
+                </h6>
+              </div>
+              <div
+                class="comment"
+                [ngClass]="{ 'dark-mode': isDarkMode }"
+                style="
+                  background-color: #f0f2f5;
+                  border-radius: 18px;
+                  overflow-wrap: break-word;
+                  overflow-y: scroll;
+                  z-index: 1;
+                  max-height: 200px;
+                  width: 36.5rem;
+                  max-width: 100rem;
+                "
+              >
+                <p
+                  class="comment"
+                  style="margin: 0"
+                  [ngClass]="{ 'dark-mode': isDarkMode }"
+                >
+                  {{ comment }}
+                </p>
+              </div>
+              <div
+                style="display: flex; justify-content: center"
+                [ngClass]="{ 'dark-mode': isDarkMode }"
+              >
+                <button
+                  class="btn btn-outline-primary"
+                  (click)="setEditingComment(i)"
+                >
+                  Edit Comment
+                </button>
+                <button class="btn btn-outline-success" style="height: 63px">
+                  Reply
+                </button>
+                <button
+                  class="btn btn-outline-danger"
+                  (click)="deleteComment(i)"
+                >
+                  Delete Comment
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- <button
+              class="btn btn-outline-primary"
+              (click)="setEditingComment(i)"
+            >
+              Edit Comment
+            </button>
+            <button class="btn btn-outline-success" style="height: 63px">
+              Reply
+            </button>
+            <button class="btn btn-outline-danger" (click)="deleteComment(i)">
+              Delete Comment
+            </button>
+          </div> -->
+          <!-- <div class="delete-edit-btn" style="left: 0">
+            <button class="btn btn-primary" (click)="onEdit()">Edit Post</button
+            >&nbsp;
+            <button class="btn btn-danger" (click)="delete()">
+              Delete Post
+            </button>
+          </div> -->
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ export class Post {
     public imgPatch: string,
     public description: string,
     public author: string,
+    public authorId: string,  // Add this line
     public dateCreated: Date,
     public numberOfLikes: number,
     public numberOfHaha: number,

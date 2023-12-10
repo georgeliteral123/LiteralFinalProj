@@ -4,6 +4,10 @@ import { Post } from '../post.model';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 import { ThemeService } from '../theme.service';
+import { AuthService } from '../auth.service';
+import { User } from '../user.model';
+import { Observable } from 'rxjs'; // import Observable
+
 
 @Component({
   selector: 'app-post',
@@ -11,12 +15,17 @@ import { ThemeService } from '../theme.service';
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
+  user: User | null = null;
+  currentUser: Observable<User | null> = this.authService.currentUser; // explicitly type currentUser as Observable<User | null>
   isDarkMode: boolean = false;
+  showButtons: boolean = false;
 
   constructor(
     private postService: PostService,
     private router: Router,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private authService: AuthService,
+
   ) {
     this.editingCommentIndex = null;
   }
@@ -32,6 +41,10 @@ export class PostComponent implements OnInit {
     }
     this.themeService.isDarkMode.subscribe((darkMode) => {
       this.isDarkMode = darkMode;
+    });
+    this.authService.currentUser.subscribe((user) => {
+      this.user = user;
+      console.log('Current User:', user); // Check the logged-in user details
     });
   }
   delete() {

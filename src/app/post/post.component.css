@@ -45,8 +45,9 @@
   height: 2.5vh;
   font-size: xx-small;
 }
-.edit-delete-com-btn .btn.btn-outline-primary,
-.edit-delete-com-btn .btn.btn-outline-danger {
+.comment .edit-delete-com-btn .btn.btn-outline-primary,
+.comment .edit-delete-com-btn .btn.btn-outline-danger,
+.comment .edit-delete-com-btn .btn.btn-outline-success {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,5 +71,13 @@
 }
 .dark-mode {
   background-color: #242526;
+  color: white;
+}
+.comment .comment .dark-mode {
+  background-color: #242526;
+  color: white;
+}
+.comment-section .dark-mode{
+  background-color: #18191a;
   color: white;
 }
