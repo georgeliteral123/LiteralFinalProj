@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   top: 0;
   box-sizing: border-box;
@@ -80,4 +80,154 @@
 .comment-section .dark-mode{
   background-color: #18191a;
   color: white;
+} */
+
+/* Reset some default browser styles */
+body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a basic font family and background color to the entire page */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+}
+
+/* Container styling */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.delete-edit-btn {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.delete-edit-btn button {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+
+/* Post content styling */
+h5, strong, img, p {
+  padding: 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.reaction {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.reaction button {
+  margin-right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Comment section styling */
+.comment-section {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.comment-section h1 {
+  margin-bottom: 10px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0;
+  background-color: #f0f2f5; 
+  border-radius: 18px;
+  width: 32.3rem;
+  max-width: 100rem;
+  max-height: 200px;
+  margin-left: -10px;
+
+}
+.comsec {
+  min-height: 50px;
+  max-height: 100px; /* Adjust as needed */
+  overflow-y: auto; /* Use 'auto' to show scrollbar only when needed */
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+
+.comment .idk {
+  background-color: #cacaca;
+  border-radius: 18px;
+  padding: 10px;
+}
+
+.comment .commentator-name {
+  margin-bottom: 10px;
+}
+
+.comment .comment {
+  margin: 0;
+}
+
+.comment button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Dark mode styling */
+.dark-mode {
+  /* background-color: #18191a; */
+  background-color: #242526;
+  color: #fff;
+}
+.container .dark-mode{
+  color: #fff;
+  /* background-color: #242526; */
+  background-color: #18191a;
+}
+.comment .comment .dark-mode{
+  background-color: #18191a;
+  border-radius: 18px;
+  width: 32.3rem;
+  max-width: 100rem;
+}
+.idk .dark-mode,
+.comment .dark-mode{
+  background-color: #242526;
+}
+.reaction button:nth-child(1),
+.reaction button:nth-child(2),
+.reaction button:nth-child(3),
+.reaction button:nth-child(4),
+.reaction button:nth-child(5){
+  border: solid 1px black;
+  border-radius: 20rem;
+ background: #cacaca;
+ transition: transform .2s;
+}
+.reaction button:nth-child(1):hover,
+.reaction button:nth-child(2):hover,
+.reaction button:nth-child(3):hover,
+.reaction button:nth-child(4):hover,
+.reaction button:nth-child(5):hover{
+transform: scale(1.1);
 }

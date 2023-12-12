@@ -7,23 +7,16 @@
   </head>
   <body>
     <div [ngClass]="{ 'dark-mode': isDarkMode }">
-      <div class="container">
+      <div class="container" [ngClass]="{ 'dark-mode': isDarkMode }">
         <div class="delete-edit-btn">
           <button (click)="showButtons = !showButtons">...</button>
           <button
             class="btn btn-primary"
-            *ngIf="showButtons"
+            *ngIf="showButtons && (currentUser | async)?.email == post?.author"
             (click)="onEdit()"
           >
             Edit Post</button
           >&nbsp;
-          <!-- <button
-            class="btn btn-danger"
-            *ngIf="showButtons"
-            (click)="delete()"
-          >
-            Delete Post
-          </button> -->
           <button
             class="btn btn-danger"
             *ngIf="showButtons && (currentUser | async)?.email == post?.author"
@@ -43,31 +36,45 @@
           src="{{ post?.imgPatch }}"
           alt="img"
           width="300px"
-          style="position: relative"
         />
         <p><strong>Description: </strong> {{ post?.description }}</p>
 
-        <p><strong>Date Created: </strong>{{ post?.dateCreated }}</p>
+        <!-- <p><strong>Date Created: </strong>{{ post?.dateCreated }}</p> -->
+        <p>
+          <strong>Date Created: </strong
+          >{{ post?.dateCreated | date : "MM/dd/yyyy, h:mm a" }}
+        </p>
 
-        <div class="reaction" style="display: inline-flex">
-          <button (click)="onClick()">👍</button>&nbsp;
-          <p style="margin-top: 10px">Likes: {{ post?.numberOfLikes }}</p>
-          &nbsp;&nbsp; <button (click)="onHAHA()">😁</button>&nbsp;
-          <p style="margin-top: 10px">Haha: {{ post?.numberOfHaha }}</p>
-          &nbsp;&nbsp; <button (click)="onHeart()">💖</button>&nbsp;
-          <p style="margin-top: 10px">Heart: {{ post?.numberOfHeart }}</p>
-          &nbsp;&nbsp; <button (click)="onSad()">😭</button>&nbsp;
-          <p style="margin-top: 10px">Sad: {{ post?.numberOfSad }}</p>
-          &nbsp;&nbsp; <button (click)="onAngry()">😡</button>&nbsp;
-          <p style="margin-top: 10px">Angry: {{ post?.numberOfAngry }}</p>
+        <div class="reaction">
+          <button
+            (click)="toggleReactions()"
+            [ngClass]="{ 'dark-mode': isDarkMode }"
+          >
+            React
+          </button>
+          <div *ngIf="showReactions" class="reaction transition-effect">
+            <button
+              (click)="onClick(); toggleReactions()"
+              [ngClass]="{ 'dark-mode': isDarkMode }"
+            >
+              {{ post?.numberOfLikes }} 👍<span> Like</span></button
+            >&nbsp;&nbsp;&nbsp;&nbsp;
+            <button
+              (click)="onUnLike(); toggleReactions()"
+              [ngClass]="{ 'dark-mode': isDarkMode }"
+            >
+              {{ post?.numberOfUnLike }} 👎<span> Dislike </span>
+            </button>
+          </div>
+          <button *ngIf="post" (click)="sharePost(post)">Share</button>
+
           &nbsp;&nbsp;
         </div>
 
         <br />
 
-        <!-- <div class="comment" style="text-align: center; align-items: center">
-          <h1>Add a Comment:</h1>
-
+        <div class="comment-section" [ngClass]="{ 'dark-mode': isDarkMode }">
+          <h6>Add a Comment:</h6>
           <textarea
             name="comment"
             id="comment{{ index }}"
@@ -83,7 +90,6 @@
             "
             class="btn btn-warning subcom"
             (click)="submitComment()"
-            style="margin-bottom: 10px"
           >
             Post Comment
           </button>
@@ -92,152 +98,71 @@
             *ngIf="editingCommentIndex !== null"
             class="btn btn-warning update"
             (click)="updateComment()"
-            style="margin-bottom: 10px"
           >
             Update Comment
           </button>
 
-          <h1>Comments:</h1>
-
-          <div
-            class="edit-delete-com-btn"
-            *ngFor="let comment of post?.comments; let i = index"
-          >
-            <p>{{ comment }}</p>
-            <button
-              class="btn btn-outline-primary"
-              (click)="setEditingComment(i)"
-            >
-              Edit Comment
-            </button>
-            <button class="btn btn-outline-danger" (click)="deleteComment(i)">
-              Delete Comment
-            </button>
-          </div>
-        </div> -->
-
-        <div
-          class="comment-section"
-          [ngClass]="{ 'dark-mode': isDarkMode }"
-          style="width: 100%; border-top: 1px solid #ccc; margin-top: 20px"
-        >
-          <h1>Add a Comment:</h1>
-          <textarea
-            name="comment"
-            id="comment{{ index }}"
-            cols="50"
-            rows="2"
-            [(ngModel)]="comment"
-            placeholder="Enter comment here"
-            style="width: 100%; margin-bottom: 10px"
-          ></textarea>
-
-          <button
-            *ngIf="
-              editingCommentIndex === null || editingCommentIndex === undefined
-            "
-            class="btn btn-warning subcom"
-            (click)="submitComment()"
-            style="margin-bottom: 10px"
-          >
-            Post Comment
-          </button>
-
-          <button
-            *ngIf="editingCommentIndex !== null"
-            class="btn btn-warning update"
-            (click)="updateComment()"
-            style="margin-bottom: 10px"
-          >
-            Update Comment
-          </button>
-
-          <h1>Comments:</h1>
+          <h6>Comments:</h6>
 
           <div
             [ngClass]="{ 'dark-mode': isDarkMode }"
             class="comment"
             *ngFor="let comment of post?.comments; let i = index"
-            style="display: flex; align-items: flex-start; margin: 10px 0"
           >
-            <div
-              class="idk"
-              [ngClass]="{ 'dark-mode': isDarkMode }"
-              style="background-color: #cacaca; border-radius: 18px"
-            >
+            <div class="idk" [ngClass]="{ 'dark-mode': isDarkMode }">
               <div
                 class="commentator-name"
                 [ngClass]="{ 'dark-mode': isDarkMode }"
               >
-                <h6 style="position: fixed; display: contents">
-                  <b>{{ post?.author }}</b>
+                <!-- <h6 style="position: sticky; display: inline-flex">
+                  <b>{{ comment.author }}</b>
+                  <p style="font-weight: lighter">
+                    {{ comment.dateCreated | date : "MM/dd/yyyy, h:mm a" }}
+                  </p>
+                </h6> -->
+                <h6
+                  style="position: sticky; display: flex; align-items: center"
+                >
+                  <div class="author" style="margin-right: 10px">
+                    <b>{{ comment.author }}</b>
+                  </div>
+                  <div class="date" style="font-size: 0.8em; color: #888">
+                    <p style="font-weight: lighter">
+                      {{ comment.dateCreated | date : "MM/dd/yyyy, h:mm a" }}
+                    </p>
+                  </div>
                 </h6>
               </div>
-              <div
-                class="comment"
-                [ngClass]="{ 'dark-mode': isDarkMode }"
-                style="
-                  background-color: #f0f2f5;
-                  border-radius: 18px;
-                  overflow-wrap: break-word;
-                  overflow-y: scroll;
-                  z-index: 1;
-                  max-height: 200px;
-                  width: 36.5rem;
-                  max-width: 100rem;
-                "
-              >
-                <p
-                  class="comment"
-                  style="margin: 0"
-                  [ngClass]="{ 'dark-mode': isDarkMode }"
-                >
-                  {{ comment }}
-                </p>
+              <div class="comment" [ngClass]="{ 'dark-mode': isDarkMode }">
+                <div class="comsec" [ngClass]="{ 'dark-mode': isDarkMode }">
+                  <p
+                    class="comment-text"
+                    [ngClass]="{ 'dark-mode': isDarkMode }"
+                  >
+                    {{ comment.text }}
+                  </p>
+                </div>
               </div>
-              <div
-                style="display: flex; justify-content: center"
-                [ngClass]="{ 'dark-mode': isDarkMode }"
-              >
+
+              <div [ngClass]="{ 'dark-mode': isDarkMode }">
                 <button
                   class="btn btn-outline-primary"
                   (click)="setEditingComment(i)"
+                  *ngIf="comment.author === (currentUser | async)?.email"
                 >
                   Edit Comment
                 </button>
-                <button class="btn btn-outline-success" style="height: 63px">
-                  Reply
-                </button>
+                <button class="btn btn-outline-success">Reply</button>
                 <button
                   class="btn btn-outline-danger"
                   (click)="deleteComment(i)"
+                  *ngIf="comment.author === (currentUser | async)?.email"
                 >
                   Delete Comment
                 </button>
               </div>
             </div>
           </div>
-
-          <!-- <button
-              class="btn btn-outline-primary"
-              (click)="setEditingComment(i)"
-            >
-              Edit Comment
-            </button>
-            <button class="btn btn-outline-success" style="height: 63px">
-              Reply
-            </button>
-            <button class="btn btn-outline-danger" (click)="deleteComment(i)">
-              Delete Comment
-            </button>
-          </div> -->
-          <!-- <div class="delete-edit-btn" style="left: 0">
-            <button class="btn btn-primary" (click)="onEdit()">Edit Post</button
-            >&nbsp;
-            <button class="btn btn-danger" (click)="delete()">
-              Delete Post
-            </button>
-          </div> -->
         </div>
       </div>
     </div>

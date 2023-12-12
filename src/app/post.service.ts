@@ -7,6 +7,13 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class PostService {
   listChangeEvent: EventEmitter<Post[]> = new EventEmitter();
+  listOfPostsChanged = new Subject<Post[]>();
+  private postsUpdated = new Subject<Post[]>();
+  getNewId(): string {
+    return Math.random().toString(36).substr(2, 9);
+  }
+  
+  
 
   listOfPosts: Post[] = [
     // new Post(
@@ -36,11 +43,13 @@ export class PostService {
   getPost() {
     return this.listOfPosts;
   }
-  // deleteButton(index: number) {
-  //   this.listOfPosts.splice(index, 1);
-  // }
+  getPostsUpdateListener() {
+    return this.postsUpdated.asObservable();
+  }
   addPost(post: Post) {
     this.listOfPosts.push(post);
+    this.listOfPostsChanged.next(this.listOfPosts); // Notify subscribers of the change
+    this.postsUpdated.next([...this.listOfPosts]);
     this.saveData();
   }
   updatePost(index: number, post: Post) {
@@ -54,33 +63,23 @@ export class PostService {
     this.listOfPosts[index].numberOfLikes++;
     this.saveData();
   }
-  HahaPost(index: number) {
-    this.listOfPosts[index].numberOfHaha++;
+  
+  UnLikePost(index: number) {
+    this.listOfPosts[index].numberOfUnLike++;
     this.saveData();
-  }
-  HeartPost(index: number) {
-    this.listOfPosts[index].numberOfHeart++;
-    this.saveData();
-  }
-  SadPost(index: number) {
-    this.listOfPosts[index].numberOfSad++;
-    this.saveData();
-  }
-  AngryPost(index: number) {
-    this.listOfPosts[index].numberOfAngry++;
   }
 
-  addComment(index: number, comment: string) {
+
+  // addComment(index: number, comment: { text: string; author: string | null }) {
+  //   this.listOfPosts[index].comments.push(comment);
+  //   this.saveData();
+  // }
+  addComment(index: number, comment: { text: string; author: string | null, dateCreated: Date }) {
     this.listOfPosts[index].comments.push(comment);
     this.saveData();
   }
-  // setPost(NewListOfPost: Post[]) {
-  //   this.listOfPosts = NewListOfPost;
-  //   this.listChangeEvent.emit(NewListOfPost);
-  //   this.saveData();
-  // }
+
   setPost(NewListOfPost: Post[]): void {
-    // Create a copy of the array before emitting
     const copyOfList = [...NewListOfPost];
 
     this.listOfPosts = copyOfList;

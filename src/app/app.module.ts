@@ -64,25 +64,19 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environment/environment';
 import { AuthGuardService } from './auth-guard.service';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'authentication', pathMatch: 'full' },
   { path: '', component: LoginComponent },
   { path: 'post', component: PostComponent },
   {
-    path: 'post-list',
-    component: PostListComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'post-edit',
-    component: PostEditComponent,
-    canActivate: [AuthGuardService],
-  },
-  { path: 'auth', component: AuthComponent },
-  { path: 'post-edit/:index', component: PostEditComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+    path: 'post-list', component: PostListComponent, canActivate: [AuthGuardService] },
+  { path: 'post-edit', component: PostEditComponent, canActivate: [AuthGuardService] },
+  { path: 'auth', component: AuthComponent, canActivate: [AuthGuardService], },
+  { path: 'post-edit/:index', component: PostEditComponent, canActivate: [AuthGuardService], },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuardService],},
+  { path: 'profile', component: ProfileComponent},
 ];
 
 const firebaseConfig = {
@@ -106,6 +100,7 @@ const firebaseConfig = {
     PostListComponent,
     LoginComponent,
     RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

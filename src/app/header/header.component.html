@@ -12,7 +12,6 @@
   <div class="container-fluid">
     <a
       class="navbar-brand"
-      href="#"
       style="font-weight: 1000; color: blue; position: relative; left: 30px"
       >P I S B O K</a
     >
@@ -99,6 +98,7 @@
           type="checkbox"
           id="darkModeSwitch"
           (change)="toggleDarkMode()"
+          style="cursor: pointer"
         />
         <label class="form-check-label" for="darkModeSwitch"
           >Madilim na mode</label
@@ -106,7 +106,11 @@
         &nbsp; &nbsp;
       </div>
 
-      <h6 *ngIf="currentUser | async">
+      <h6
+        *ngIf="currentUser | async"
+        routerLink="profile"
+        style="cursor: pointer"
+      >
         Logged in as: {{ (currentUser | async)?.email }}
       </h6>
 

@@ -7,11 +7,10 @@ export class Post {
     public authorId: string,  // Add this line
     public dateCreated: Date,
     public numberOfLikes: number,
-    public numberOfHaha: number,
-    public numberOfHeart: number,
-    public numberOfSad: number,
-    public numberOfAngry: number,
-    public comments: string[] = [],
-    public id: string
+    public numberOfUnLike: number,
+    // public comments: string[] = [],
+    // public comments: { text: string; author: string | null }[] = [],
+    public comments: { text: string; author: string | null, dateCreated: Date }[] = [],
+    public id: string,
   ) {}
 }

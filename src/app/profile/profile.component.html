@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="profile">
+    <div class="profile-image">
+      <img
+        src="https://scontent.fmnl9-2.fna.fbcdn.net/v/t1.15752-9/403420788_1706384093182742_6338897946567200672_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFKyDHZonrWIZp-BsYityhQ4yQrmzBmeULjJCubMGZ5Qu20po9FgEpzzWRndBDiz3jKx3V5re6JD5epd2nj2CM2&_nc_ohc=Xo98DKlH38EAX88QALv&_nc_ht=scontent.fmnl9-2.fna&oh=03_AdSaTWa-kePHmYdgp0Z_s-ve5vPC5Hvg41L29deVCG2ciA&oe=659F8EEA"
+        alt="Profile Picture"
+      />
+    </div>
+    <div class="profile-user-settings">
+      <h6 class="profile-author" *ngIf="currentUser | async">
+        {{ (currentUser | async)?.email }}
+      </h6>
+      <button class="btn profile-edit-btn">
+        <label for="file-upload" class="custom-file-upload">
+          Add Picture
+        </label>
+        <input id="file-upload" type="file" style="display: none" />
+      </button>
+      <button class="btn profile-settings-btn" aria-label="profile settings">
+        <i class="fas fa-cog"></i>
+      </button>
+      <div class="profile-bio">
+        <p><span class="profile-real-name"></span> bio ur face📈</p>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <ul>
+        <li>
+          <span class="profile-stat-count"><strong>20</strong></span> posts
+        </li>
+        <li>
+          <span class="profile-stat-count"><strong>1,200</strong></span>
+          followers
+        </li>
+        <li>
+          <span class="profile-stat-count"><strong>300</strong></span> following
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- End of profile section -->
+  <div class="posts">
+    <div>
+      <img src="" alt="Post Image" />
+      <p>Description</p>
+    </div>
+  </div>
+</div>
