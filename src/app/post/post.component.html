@@ -46,23 +46,12 @@
         </p>
 
         <div class="reaction">
-          <button
-            (click)="toggleReactions()"
-            [ngClass]="{ 'dark-mode': isDarkMode }"
-          >
-            React
-          </button>
+          <button (click)="toggleReactions()">React</button>
           <div *ngIf="showReactions" class="reaction transition-effect">
-            <button
-              (click)="onClick(); toggleReactions()"
-              [ngClass]="{ 'dark-mode': isDarkMode }"
-            >
+            <button (click)="onClick(); toggleReactions()">
               {{ post?.numberOfLikes }} 👍<span> Like</span></button
             >&nbsp;&nbsp;&nbsp;&nbsp;
-            <button
-              (click)="onUnLike(); toggleReactions()"
-              [ngClass]="{ 'dark-mode': isDarkMode }"
-            >
+            <button (click)="onUnLike(); toggleReactions()">
               {{ post?.numberOfUnLike }} 👎<span> Dislike </span>
             </button>
           </div>

@@ -23,13 +23,28 @@ export class BackEndService {
       });
   }
 
+  // fetchData() {
+  //   this.http
+  //     .get<Post[]>(
+  //       'https://practicedb-128d0-default-rtdb.asia-southeast1.firebasedatabase.app/post.json'
+  //     )
+  //     .pipe(
+  //       tap((NewListOfPost: Post[]) => {
+  //         console.log(NewListOfPost);
+  //         this.postService.setPost(NewListOfPost);
+  //       })
+  //     )
+  //     .subscribe();
+  // }
+  
   fetchData() {
     this.http
-      .get<Post[]>(
+      .get<{ [key: string]: Post }>(
         'https://practicedb-128d0-default-rtdb.asia-southeast1.firebasedatabase.app/post.json'
       )
       .pipe(
-        tap((NewListOfPost: Post[]) => {
+        tap((data: { [key: string]: Post }) => {
+          const NewListOfPost: Post[] = Object.values(data);
           console.log(NewListOfPost);
           this.postService.setPost(NewListOfPost);
         })

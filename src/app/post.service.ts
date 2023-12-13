@@ -12,6 +12,7 @@ export class PostService {
   getNewId(): string {
     return Math.random().toString(36).substr(2, 9);
   }
+  postAdded = new Subject<Post>();
   
   
 
@@ -46,10 +47,18 @@ export class PostService {
   getPostsUpdateListener() {
     return this.postsUpdated.asObservable();
   }
+  // addPost(post: Post) {
+  //   this.listOfPosts.push(post);
+  //   this.listOfPostsChanged.next(this.listOfPosts); // Notify subscribers of the change
+  //   this.postsUpdated.next([...this.listOfPosts]);
+  //   this.saveData();
+  // }
+  
   addPost(post: Post) {
     this.listOfPosts.push(post);
     this.listOfPostsChanged.next(this.listOfPosts); // Notify subscribers of the change
     this.postsUpdated.next([...this.listOfPosts]);
+    this.postAdded.next(post); // Emit the new post
     this.saveData();
   }
   updatePost(index: number, post: Post) {

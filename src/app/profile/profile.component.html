@@ -1,48 +1,285 @@
-<div class="container">
-  <div class="profile">
-    <div class="profile-image">
-      <img
-        src="https://scontent.fmnl9-2.fna.fbcdn.net/v/t1.15752-9/403420788_1706384093182742_6338897946567200672_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFKyDHZonrWIZp-BsYityhQ4yQrmzBmeULjJCubMGZ5Qu20po9FgEpzzWRndBDiz3jKx3V5re6JD5epd2nj2CM2&_nc_ohc=Xo98DKlH38EAX88QALv&_nc_ht=scontent.fmnl9-2.fna&oh=03_AdSaTWa-kePHmYdgp0Z_s-ve5vPC5Hvg41L29deVCG2ciA&oe=659F8EEA"
-        alt="Profile Picture"
-      />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+  </head>
+  <body>
+    <div class="container" [ngClass]="{ 'dark-mode': isDarkMode }">
+      <div class="profile" [ngClass]="{ 'dark-mode': isDarkMode }">
+        <div class="profile-image">
+          <img
+            src="https://scontent.fmnl9-2.fna.fbcdn.net/v/t1.15752-9/403420788_1706384093182742_6338897946567200672_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFKyDHZonrWIZp-BsYityhQ4yQrmzBmeULjJCubMGZ5Qu20po9FgEpzzWRndBDiz3jKx3V5re6JD5epd2nj2CM2&_nc_ohc=Xo98DKlH38EAX88QALv&_nc_ht=scontent.fmnl9-2.fna&oh=03_AdSaTWa-kePHmYdgp0Z_s-ve5vPC5Hvg41L29deVCG2ciA&oe=659F8EEA"
+            alt="Profile Picture"
+          />
+        </div>
+        <div class="profile-user-settings">
+          <h6 class="profile-author" *ngIf="currentUser | async">
+            {{ (currentUser | async)?.email }}
+          </h6>
+          <button class="btn profile-edit-btn">
+            <label for="file-upload" class="custom-file-upload">
+              Add Picture
+            </label>
+            <input id="file-upload" type="file" style="display: none" />
+          </button>
+
+          <div class="profile-bio">
+            <p><span class="profile-real-name"></span> bio ur face📈</p>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <ul>
+            <li>
+              <span class="profile-stat-count"><strong>20</strong></span> posts
+            </li>
+            <li>
+              <span class="profile-stat-count"><strong>1,200</strong></span>
+              followers
+            </li>
+            <li>
+              <span class="profile-stat-count"><strong>300</strong></span>
+              following
+            </li>
+          </ul>
+        </div>
+        <button class="btn profile-settings-btn" aria-label="profile settings">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="16"
+            fill="currentColor"
+            class="bi bi-gear"
+            viewBox="0 0 20 16"
+          >
+            <path
+              d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+            />
+            <path
+              d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
+            />
+          </svg>
+        </button>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <!-- End of profile section -->
     </div>
-    <div class="profile-user-settings">
-      <h6 class="profile-author" *ngIf="currentUser | async">
-        {{ (currentUser | async)?.email }}
-      </h6>
-      <button class="btn profile-edit-btn">
-        <label for="file-upload" class="custom-file-upload">
-          Add Picture
-        </label>
-        <input id="file-upload" type="file" style="display: none" />
-      </button>
-      <button class="btn profile-settings-btn" aria-label="profile settings">
-        <i class="fas fa-cog"></i>
-      </button>
-      <div class="profile-bio">
-        <p><span class="profile-real-name"></span> bio ur face📈</p>
+    <div class="posts-container" [ngClass]="{ 'dark-mode': isDarkMode }">
+      <div
+        *ngFor="let post of userPosts; let i = index"
+        class="post"
+        [ngClass]="{ 'dark-mode': isDarkMode }"
+      >
+        <!-- Now inside this div, you can use 'post' which refers to each post of the current user -->
+        <div [ngClass]="{ 'dark-mode': isDarkMode }">
+          <div class="container" [ngClass]="{ 'dark-mode': isDarkMode }">
+            <div class="delete-edit-btn">
+              <button (click)="showButtons = !showButtons">...</button>
+              <button
+                class="btn btn-primary"
+                *ngIf="
+                  showButtons && (currentUser | async)?.email == post?.author
+                "
+                (click)="onEdit()"
+              >
+                Edit Post</button
+              >&nbsp;
+              <button
+                class="btn btn-danger"
+                *ngIf="
+                  showButtons && (currentUser | async)?.email == post?.author
+                "
+                (click)="delete()"
+              >
+                Delete Post
+              </button>
+            </div>
+            <hr />
+            <!-- ... other parts of your post display ... -->
+            <h5>
+              <p>{{ post.author }}</p>
+            </h5>
+            <strong>Title: {{ post.title }}</strong> <br />
+            <img
+              class="img-responsive"
+              src="{{ post.imgPatch }}"
+              alt="img"
+              style="max-width: 300px"
+            />
+            <p><strong>Description: </strong> {{ post.description }}</p>
+            <p>
+              <strong>Date Created: </strong
+              >{{ post.dateCreated | date : "MM/dd/yyyy, h:mm a" }}
+            </p>
+            <div class="reaction">
+              <button (click)="toggleReactions()">React</button>
+              <div *ngIf="showReactions" class="reaction transition-effect">
+                <button (click)="onClick(); toggleReactions()">
+                  {{ post?.numberOfLikes }} 👍<span> Like</span></button
+                >&nbsp;&nbsp;&nbsp;&nbsp;
+                <button (click)="onUnLike(); toggleReactions()">
+                  {{ post?.numberOfUnLike }} 👎<span> Dislike </span>
+                </button>
+              </div>
+              <button *ngIf="post" (click)="sharePost(post)">Share</button>
+
+              &nbsp;&nbsp;
+            </div>
+            <div
+              class="comment-section"
+              [ngClass]="{ 'dark-mode': isDarkMode }"
+            >
+              <h6 >Add a Comment:</h6>
+              <textarea
+                name="comment"
+                id="comment{{ index }}"
+                cols="50"
+                rows="2"
+                [(ngModel)]="comment"
+                placeholder="Enter comment here"
+              ></textarea>
+
+              <button
+                *ngIf="
+                  editingCommentIndex === null ||
+                  editingCommentIndex === undefined
+                "
+                class="btn btn-warning subcom"
+                (click)="submitComment(i)"
+              >
+                Post Comment
+              </button>
+
+              <button
+                *ngIf="editingCommentIndex !== null"
+                class="btn btn-warning update"
+                (click)="updateComment()"
+              >
+                Update Comment
+              </button>
+
+              <h6>Comments:</h6>
+
+              <div
+                [ngClass]="{ 'dark-mode': isDarkMode }"
+                class="comment"
+                *ngFor="let comment of post?.comments; let i = index"
+              >
+                <div class="idk" [ngClass]="{ 'dark-mode': isDarkMode }">
+                  <div
+                    class="commentator-name"
+                    [ngClass]="{ 'dark-mode': isDarkMode }"
+                  >
+                    <h6
+                      style="
+                        position: sticky;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <div class="author" style="margin-right: 10px">
+                        <b>{{ comment.author }}</b>
+                      </div>
+                      <div class="date" style="font-size: 0.8em; color: #888">
+                        <p style="font-weight: lighter">
+                          {{
+                            comment.dateCreated | date : "MM/dd/yyyy, h:mm a"
+                          }}
+                        </p>
+                      </div>
+                    </h6>
+                  </div>
+                  <div class="comment" [ngClass]="{ 'dark-mode': isDarkMode }">
+                    <div class="comsec" [ngClass]="{ 'dark-mode': isDarkMode }">
+                      <p
+                        class="comment-text"
+                        [ngClass]="{ 'dark-mode': isDarkMode }"
+                      >
+                        {{ comment.text }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div [ngClass]="{ 'dark-mode': isDarkMode }">
+                    <button
+                      class="btn btn-outline-primary"
+                      (click)="setEditingComment(i)"
+                      *ngIf="comment.author === (currentUser | async)?.email"
+                    >
+                      Edit Comment
+                    </button>
+                    <button class="btn btn-outline-success">Reply</button>
+                    <button
+                      class="btn btn-outline-danger"
+                      (click)="deleteComment(i)"
+                      *ngIf="comment.author === (currentUser | async)?.email"
+                    >
+                      Delete Comment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="profile-stats">
-      <ul>
-        <li>
-          <span class="profile-stat-count"><strong>20</strong></span> posts
-        </li>
-        <li>
-          <span class="profile-stat-count"><strong>1,200</strong></span>
-          followers
-        </li>
-        <li>
-          <span class="profile-stat-count"><strong>300</strong></span> following
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- End of profile section -->
-  <div class="posts">
-    <div>
-      <img src="" alt="Post Image" />
-      <p>Description</p>
-    </div>
-  </div>
-</div>
+  </body>
+</html>
