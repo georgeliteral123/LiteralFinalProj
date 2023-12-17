@@ -65,6 +65,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environment/environment';
 import { AuthGuardService } from './auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 
 const routes: Routes = [
   // { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -75,8 +78,9 @@ const routes: Routes = [
   { path: 'post-edit', component: PostEditComponent, canActivate: [AuthGuardService] },
   { path: 'auth', component: AuthComponent, canActivate: [AuthGuardService], },
   { path: 'post-edit/:index', component: PostEditComponent, canActivate: [AuthGuardService], },
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuardService],},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
 ];
 
 const firebaseConfig = {
@@ -113,6 +117,9 @@ const firebaseConfig = {
     provideFirebaseApp(() => initializeApp(environment)),
     provideAuth(() => getAuth()),
     AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment),
+    AngularFireStorageModule,
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

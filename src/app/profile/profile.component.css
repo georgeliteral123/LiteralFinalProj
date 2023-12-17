@@ -21,8 +21,8 @@
 }
 
 .profile-image img {
-  width: 93%;
-  height: 70%;
+  width: 150px;
+  height: 147px;
   border-radius: 50%;
   margin-left: 32px;
 }
@@ -96,6 +96,7 @@
   color: white;
   cursor: pointer;
   border-radius: 5px;
+  width:120px;
 }
 .posts-container {
   display: flex;
@@ -223,4 +224,16 @@ transform: scale(1.1);
 .comment-section .dark-mode{
   background-color: #18191a;
   color: white;
+}
+.file-label {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+.file-label:hover {
+  background-color: #45a049;
+}
+.profile-image{
+  display: contents;
 }

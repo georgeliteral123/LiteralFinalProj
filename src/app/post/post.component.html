@@ -17,15 +17,26 @@
           >
             Edit Post</button
           >&nbsp;
-          <button
+          <!-- <button
             class="btn btn-danger"
             *ngIf="showButtons && (currentUser | async)?.email == post?.author"
             (click)="delete()"
           >
             Delete Post
+          </button> -->
+          <button
+            class="btn btn-danger"
+            *ngIf="
+              showButtons &&
+              ((currentUser | async)?.email == post?.author ||
+                (currentUser | async)?.email == post?.sharedBy)
+            "
+            (click)="delete()"
+          >
+            Delete Post
           </button>
         </div>
-
+        <p *ngIf="post?.sharedBy">Shared By: {{ post?.sharedBy }}</p>
         <h5>
           <p>{{ post?.author }}</p>
         </h5>

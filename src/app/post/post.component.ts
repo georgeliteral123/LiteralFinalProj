@@ -94,11 +94,29 @@ export class PostComponent implements OnInit, OnDestroy {
     this.listOfPostsChangedSubscription?.unsubscribe();
   }
 
+  // delete() {
+  //   if (confirm('Are you sure you want to delete this post?')) {
+  //     this.postService.deleteButton(this.index);
+  //   }
+  // }
   delete() {
-    if (confirm('Are you sure you want to delete this post?')) {
-      this.postService.deleteButton(this.index);
+    if (this.post?.author === this.user?.email || this.post?.sharedBy === this.user?.email) {
+      if (confirm('Are you sure you want to delete this post?')) {
+        this.postService.deleteButton(this.index);
+      }
+    } else {
+      alert('You can only delete posts that you authored or shared.');
     }
   }
+  // delete() {
+  //   if (this.post?.sharedBy === this.user?.email || this.post?.author === this.user?.email) {
+  //     if (confirm('Are you sure you want to delete this post?')) {
+  //       this.postService.deleteButton(this.index);
+  //     }
+  //   } else {
+  //     alert('You can only delete posts that you authored or shared.');
+  //   }
+  // }
   onEdit() {
     if (confirm('Do you really want to make changes inthis post?')) {
       this.router.navigate(['/post-edit', this.index]);
@@ -151,25 +169,43 @@ export class PostComponent implements OnInit, OnDestroy {
   //   alert('You shared this post');
   // }
 
+  // sharePost(post: Post) {
+  //   const newPost: Post = {
+  //     id: this.postService.getNewId(),
+  //     title: post.title,
+  //     description: post.description,
+  //     author: post.author,
+  //     authorId: post.authorId, // add this line
+  //     dateCreated: post.dateCreated,
+  //     // Initialize other properties as needed
+  //     imgPatch: post.imgPatch,
+  //     numberOfLikes: 0,
+  //     numberOfUnLike: 0,
+  //     comments: [],
+  //   };
+  //   this.postService.addPost(newPost);
+  //   this.listOfPosts.push(newPost); // Add the new post to the list of posts
+  //   alert('You shared this post');
+  // }
   sharePost(post: Post) {
     const newPost: Post = {
       id: this.postService.getNewId(),
       title: post.title,
       description: post.description,
       author: post.author,
-      authorId: post.authorId, // add this line
+      authorId: post.authorId,
       dateCreated: post.dateCreated,
-      // Initialize other properties as needed
       imgPatch: post.imgPatch,
       numberOfLikes: 0,
       numberOfUnLike: 0,
       comments: [],
+      sharedBy: this.user?.email || '', // set the sharedBy property to the current user's email
     };
     this.postService.addPost(newPost);
-    this.listOfPosts.push(newPost); // Add the new post to the list of posts
-    alert('You shared this post');
+    this.listOfPosts.push(newPost);
+    alert(`You, ${this.user?.email}, shared a post by ${post.author}`);
   }
-
+  
   setEditingComment(index: number): void {
     if (confirm('Do you want to continue editing this comment?')) {
       if (this.post) {

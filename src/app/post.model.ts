@@ -12,5 +12,6 @@ export class Post {
     // public comments: { text: string; author: string | null }[] = [],
     public comments: { text: string; author: string | null, dateCreated: Date }[] = [],
     public id: string,
+    public sharedBy?: string,
   ) {}
 }

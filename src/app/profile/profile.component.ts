@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user.model';
-import { Observable } from 'rxjs'; // import Observable
+import { EMPTY, Observable, of } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { PostService } from '../post.service';
 import { Post } from '../post.model';
 import { Router } from '@angular/router';
 import { ThemeService } from '../theme.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { finalize, switchMap, map } from 'rxjs/operators';
 
 
 @Component({
@@ -14,6 +17,10 @@ import { ThemeService } from '../theme.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  selectedFile: File | null = null;
+  profileImageUrl: string = '';
+  profileImageUrl$: Observable<string | undefined> = EMPTY; // Declare profileImageUrl$ here
+
   user: User | null = null;
   currentUser: Observable<User | null> = this.authService.currentUser; 
   userPosts: Post[] = [];
@@ -25,18 +32,72 @@ export class ProfileComponent implements OnInit {
   post?: Post;
   editingCommentIndex: number | null = null;
 
-  constructor(private authService: AuthService, private postService: PostService, private router: Router, private themeService: ThemeService,) { }
+  constructor(private authService: AuthService, private postService: PostService, private router: Router, private themeService: ThemeService,private storage: AngularFireStorage, private firestore: AngularFirestore) { }
 
+  // ngOnInit() {
+  //   this.authService.currentUser.subscribe((user) => {
+  //     this.user = user;
+  //     if (user) {
+  //       this.userPosts = this.postService.getPost().filter(post => post && post.author && post.author === user.email);
+  //     }
+  //   });
+  //   this.postService.listOfPostsChanged.subscribe((posts: Post[]) => {
+  //     if (this.user) {
+  //       this.userPosts = posts.filter(post => post && post.author && post.author === this.user?.email);
+  //     }
+  //   });
+  //   this.themeService.isDarkMode.subscribe((darkMode) => {
+  //     this.isDarkMode = darkMode;
+  //   });
+  //   this.authService.currentUser.subscribe((user: User | null) => { // Add User | null type to user
+  //     if (user) {
+  //       this.user = user;
+  //       this.userPosts = this.postService.getPost().filter(post => post && post.author && post.author === user.email);
+    
+  //       // Create a new profileImageUrl$ observable for this user
+  //       user.profileImageUrl$ = this.firestore.collection('users').doc(user.uid).valueChanges().pipe(
+  //         map((user: any) => user.profileImageUrl)
+  //       );
+  //     }
+  //   });
+  //   this.postService.listOfPostsChanged.subscribe((posts: Post[]) => {
+  //     if (this.user) {
+  //       this.userPosts = posts.filter(post => post && post.author && post.author === this.user?.email);
+  //     }
+  //   });
+  //   this.themeService.isDarkMode.subscribe((darkMode) => {
+  //     this.isDarkMode = darkMode;
+  //   });
+  // }
   ngOnInit() {
     this.authService.currentUser.subscribe((user) => {
       this.user = user;
       if (user) {
-        this.userPosts = this.postService.getPost().filter(post => post && post.author && post.author === user.email);
+        this.userPosts = this.postService.getPost().filter(post => post && (post.author === user.email || post.sharedBy === user.email));
       }
     });
     this.postService.listOfPostsChanged.subscribe((posts: Post[]) => {
       if (this.user) {
-        this.userPosts = posts.filter(post => post && post.author && post.author === this.user?.email);
+        this.userPosts = posts.filter(post => post && (post.author === this.user?.email || post.sharedBy === this.user?.email));
+      }
+    });
+    this.themeService.isDarkMode.subscribe((darkMode) => {
+      this.isDarkMode = darkMode;
+    });
+    this.authService.currentUser.subscribe((user: User | null) => { // Add User | null type to user
+      if (user) {
+        this.user = user;
+        this.userPosts = this.postService.getPost().filter(post => post && (post.author === user.email || post.sharedBy === user.email));
+    
+        // Create a new profileImageUrl$ observable for this user
+        user.profileImageUrl$ = this.firestore.collection('users').doc(user.uid).valueChanges().pipe(
+          map((user: any) => user.profileImageUrl)
+        );
+      }
+    });
+    this.postService.listOfPostsChanged.subscribe((posts: Post[]) => {
+      if (this.user) {
+        this.userPosts = posts.filter(post => post && (post.author === this.user?.email || post.sharedBy === this.user?.email));
       }
     });
     this.themeService.isDarkMode.subscribe((darkMode) => {
@@ -44,13 +105,58 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.selectedFile = (target.files as FileList)[0];
+  }
+
+  onUpload() {
+    let userId: string;
+    this.authService.currentUser.subscribe((user: User | null) => { 
+      if (user) {
+        userId = user.uid;
+        if (this.selectedFile) {
+          const filePath = `profileImages/${userId}/${this.selectedFile.name}`;
+          const fileRef = this.storage.ref(filePath);
+          const task = this.storage.upload(filePath, this.selectedFile);
+  
+          // observe percentage changes
+          task.percentageChanges().subscribe((percentage) => {
+            console.log(percentage);
+          });
+  
+          // get notified when the download URL is available
+          task.snapshotChanges().pipe(
+            finalize(() => {
+              fileRef.getDownloadURL().subscribe((url) => {
+                console.log(url);
+                this.profileImageUrl = url;
+  
+                // Update profile picture in Firestore
+                this.firestore.collection('users').doc(userId).set({
+                  profileImageUrl: url
+                }, { merge: true });
+  
+                // Update profile picture in application state
+                
+                if (this.user) {
+                  this.user.profileImageUrl = url;
+                }
+              });
+            })
+          ).subscribe();
+        }
+      }
+    });
+  }
+
   toggleReactions() {
     this.showReactions = !this.showReactions;
   }
 
-  delete() {
+  delete(postId: string) {
     if (confirm('Are you sure you want to delete this post?')) {
-      this.postService.deleteButton(this.index);
+      this.postService.deletePost(postId, this.user?.email || '');
     }
   }
   onEdit() {

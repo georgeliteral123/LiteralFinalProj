@@ -111,4 +111,11 @@ export class PostService {
         this.saveData(); // Save the updated data after deletion.
       });
   }
+  deletePost(postId: string, userEmail: string) {
+    const postIndex = this.listOfPosts.findIndex(post => post.id === postId && (post.author === userEmail || post.sharedBy === userEmail));
+    if (postIndex !== -1) {
+      this.listOfPosts.splice(postIndex, 1);
+      this.listOfPostsChanged.next(this.listOfPosts.slice());
+    }
+  }
 }

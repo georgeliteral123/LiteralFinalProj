@@ -36,16 +36,6 @@ export class PostEditComponent implements OnInit {
         console.log(params['index']);
         this.index = params['index'];
 
-    //     const post = this.postService.getSpecPost(this.index);
-
-    //     title = post.title;
-    //     description = post.description;
-    //     imgPath = post.imgPatch;
-    //     this.editMode = true;
-
-    //   }
-    // });
-
     const post = this.postService.getSpecPost(this.index);
 
     // Check if the current user is the author of the post
@@ -104,61 +94,4 @@ export class PostEditComponent implements OnInit {
       }
     });
   }
-  // onSubmit() {
-  //   const title = this.form.value.title;
-  //   const imgPath = this.form.value.imgPath;
-  //   const description = this.form.value.description;
-
-  //   this.authService.currentUser.subscribe(user => {
-  //     const post: Post = new Post(
-  //       title,
-  //       imgPath,
-  //       description,
-  //       user?.email || 'Anonymous',
-  //       new Date(),
-  //       0,
-  //       0,
-  //       0,
-  //       0,
-  //       0,
-  //       [],
-  //       'some-id', // Add this line
-  //     );
-      
-  //     if(this.editMode == true) {
-  //       this.postService.updatePost(this.index, post);
-  //       this.backEndService.saveData();
-  //     } else {
-  //       this.postService.addPost(post);
-  //       this.backEndService.saveData(); 
-  //     }
-  //   });
-  
-  //   this.router.navigate(['post-list']);
-  // }
-
-    // const post: Post = new Post(
-    //   title,
-    //   imgPath,
-    //   description,
-    //   'George',
-    //   new Date(),
-    //   0,
-    //   0,
-    //   0,
-    //   0,
-    //   0,
-    //   [],
-    //   'some-id', // Add this line
-
-  //     if(this.editMode == true) {
-  //       this.postService.updatePost(this.index, post);
-  //       this.backEndService.saveData();
-  //     } else {
-  //       this.postService.addPost(post);
-  //       this.backEndService.saveData(); 
-  //     }
-  //   this.router.navigate(['post-list']);
-  // }
-
 }
